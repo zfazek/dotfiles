@@ -2,6 +2,7 @@
 (cua-mode t)
 (column-number-mode t)
 (global-linum-mode t)
+(setq auto-save-default nil)
 
 (global-set-key (kbd "<f2>") 'save-some-buffers)
 (global-set-key (kbd "<f8>") 'speedbar)
