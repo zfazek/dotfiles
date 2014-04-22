@@ -1,4 +1,5 @@
 (global-auto-revert-mode 1)
+(show-paren-mode 1)
 (cua-mode t)
 (column-number-mode t)
 (global-linum-mode t)
