@@ -7,7 +7,7 @@
 (set-scroll-bar-mode 'right)
 
 (global-set-key (kbd "<f2>") 'save-some-buffers)
-(global-set-key (kbd "<f12>") 'run-shell-command)
+;(global-set-key (kbd "<f12>") 'run-shell-command)
 (global-set-key (kbd "<f8>") 'speedbar)
 (global-set-key (kbd "<RET>") 'newline-and-indent)
 ;(global-set-key (kbd "<tab>") 'dabbrev-completion)
@@ -33,4 +33,4 @@
 (defun run-shell-command()
   (interactive)
   (save-buffer)
-  (shell-command "time ./problem089.py"))
+  (shell-command "javac problem086.java && time java problem086"))
