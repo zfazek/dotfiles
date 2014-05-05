@@ -7,6 +7,7 @@
 (set-scroll-bar-mode 'right)
 
 (global-set-key (kbd "<f2>") 'save-some-buffers)
+(global-set-key (kbd "<f12>") 'run-shell-command)
 (global-set-key (kbd "<f8>") 'speedbar)
 (global-set-key (kbd "<RET>") 'newline-and-indent)
 ;(global-set-key (kbd "<tab>") 'dabbrev-completion)
@@ -28,3 +29,8 @@
     (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
           ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
           (t (self-insert-command (or arg 1)))))
+
+(defun run-shell-command()
+  (interactive)
+  (save-buffer)
+  (shell-command "time ./problem089.py"))
