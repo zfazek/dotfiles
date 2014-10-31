@@ -94,6 +94,7 @@ inoremap <silent> <C-y> <ESC><C-y>i
 set colorcolumn=81
 
 au FocusLost * :wa
+au Cursormoved * checktime
 
 filetype plugin on
 
