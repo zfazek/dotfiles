@@ -91,7 +91,7 @@ inoremap <silent> <C-y> <ESC><C-y>i
 "set wrap
 "set textwidth=79
 "set formatoptions=qrn1
-set colorcolumn=81
+"set colorcolumn=81
 
 au FocusLost * :wa
 au Cursormoved * checktime
@@ -152,7 +152,12 @@ nnoremap <silent> <S-F2> :Rexplore<CR>
 inoremap <silent> <S-F2> <ESC>:Rexplore<CR>
 
 " save session info
-nnoremap <F5> :mksession! ~/today_vim.ses
+" nnoremap <F5> :mksession! ~/today_vim.ses
+nnoremap <F5> :buffers<CR>:buffer<Space>
+inoremap <F5> <ESC>:buffers<CR>:buffer<Space>
+
+nnoremap <F6> :e.<CR>
+inoremap <F6> <ESC>:e.<CR>
 
 let g:clipbrdDefaultReg = '+'
 " copy to clipboard
