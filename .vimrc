@@ -62,7 +62,8 @@ set softtabstop=4
 set expandtab
 
 set list
-set listchars=tab:>-
+"set listchars=tab:>-
+set listchars=tab:>·,trail:·,extends:>,precedes:<,nbsp:·
 
 au BufNewFile,BufRead *.ttcn set filetype=ttcn
 au BufNewFile,BufRead *.ttcnpp set filetype=ttcn
