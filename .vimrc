@@ -130,7 +130,10 @@ inoremap jj <ESC>
 nnoremap qq :qa<CR>
 
 "open new vertical window
-nnoremap <leader>w <C-w>v<C-w>l 
+nnoremap <leader>v <C-w>v<C-w>l
+
+"open new horizontal window
+nnoremap <leader>s <C-w>s<C-w>j 
 
 " close window
 nnoremap <leader>q :q<CR>
