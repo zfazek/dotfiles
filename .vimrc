@@ -10,6 +10,10 @@
 " properly set to work with the Vim-related packages available in Debian.
 runtime! debian.vim
 
+set nocompatible              " be iMproved, required
+
+filetype plugin indent on    " required
+
 " Uncomment the next line to make Vim more Vi-compatible
 " NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
 " options, so any other options should be set AFTER setting 'compatible'.
@@ -62,8 +66,11 @@ set softtabstop=4
 set expandtab
 
 set list
-"set listchars=tab:>-
-set listchars=tab:>·,trail:·,extends:>,precedes:<,nbsp:·
+"set listchars=tab:>·
+set listchars=tab:>.,trail:.,extends:>,precedes:<,nbsp:.
+
+" Indent html doc
+:let g:html_indent_inctags = "html,body,head,tbody"
 
 au BufNewFile,BufRead *.ttcn set filetype=ttcn
 au BufNewFile,BufRead *.ttcnpp set filetype=ttcn
@@ -97,7 +104,6 @@ inoremap <silent> <C-y> <ESC><C-y>i
 au FocusLost * :wa
 au Cursormoved * checktime
 
-filetype plugin on
 
 set encoding=utf-8
 set scrolloff=5
@@ -225,6 +231,8 @@ if &term =~ '^screen'
     execute "set <xRight>=\e[1;*C"
     execute "set <xLeft>=\e[1;*D"
 endif
+
+let g:EclimCompletionMethod = 'omnifunc'
 
 function! SuperCleverTab()
     if strpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
