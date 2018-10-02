@@ -150,8 +150,17 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-nnoremap <silent> <F4> :Rgrep<CR>
-let Grep_Default_Filelist = '*.cc'
+let g:clipbrdDefaultReg = '+'
+" copy to clipboard
+nnoremap <silent> <C-c> "+y
+
+" paste from clipboard
+nnoremap <silent> <C-v> "+p
+
+" completion
+inoremap <TAB><TAB> <C-n>
+set ofu=syntaxcomplete#Complete
+"inoremap <Tab> <C-R>=SuperCleverTab()<cr>
 
 " save all files
 nnoremap <silent> <F2> :wa<CR>
@@ -161,6 +170,15 @@ inoremap <silent> <F2> <ESC>:wa<CR>a
 nnoremap <silent> <S-F2> :Rexplore<CR>
 inoremap <silent> <S-F2> <ESC>:Rexplore<CR>
 
+nnoremap <F3> *
+nnoremap <S-F3> #
+
+inoremap <F3> <ESC>*i
+inoremap <S-F3> <ESC>#i
+
+nnoremap <silent> <F4> :Rgrep<CR>
+let Grep_Default_Filelist = '*.cc'
+
 " save session info
 " nnoremap <F5> :mksession! ~/today_vim.ses
 nnoremap <F5> :buffers<CR>:buffer<Space>
@@ -169,44 +187,21 @@ inoremap <F5> <ESC>:buffers<CR>:buffer<Space>
 nnoremap <F6> :e.<CR>
 inoremap <F6> <ESC>:e.<CR>
 
-let g:clipbrdDefaultReg = '+'
-" copy to clipboard
-nnoremap <silent> <C-c> "+y
-
-" paste from clipboard
-nnoremap <silent> <C-v> "+p
-
-nnoremap <F3> *
-nnoremap <S-F3> #
-
-inoremap <F3> <ESC>*i
-inoremap <S-F3> <ESC>#i
-
-" completion
-inoremap <TAB><TAB> <C-n>
-set ofu=syntaxcomplete#Complete
-"inoremap <Tab> <C-R>=SuperCleverTab()<cr>
+map <F8> :NERDTreeToggle<CR>
 
 map <F9> :TlistToggle<CR>
 
-map <F8> :NERDTreeToggle<CR>
+nnoremap <F10> :! find . -name \* \| ctags-exuberant -L-<CR>
+inoremap <F10> <ESC>:! find . -name \* \| ctags-exuberant -L-<CR>
 
-" save and run
-nnoremap <silent> <F11> :wa<CR>:! make -f Makefile.test && ./test<CR>
-inoremap <silent> <F11> <ESC>:wa<CR>:! make -f Makefile.test && ./test<CR>
+" close window
+nnoremap <S-F11> :q<CR>
+inoremap <S-F11> <ESC>:q<CR>
 
-"nnoremap <S-F11> :! find . -name \*.cpp\* \| ctags-exuberant -L-<CR>
-nnoremap <S-F11> :! find . -name \* \| ctags-exuberant -L-<CR>
-inoremap <S-F11> <ESC>:! find . -name \* \| ctags-exuberant -L-<CR>
-
-"nnoremap <silent> <F12> :wa<CR>:! make && ./eMorris_gui<CR>
-"inoremap <silent> <F12> <ESC>:wa<CR>:! make && ./eMorris_gui<CR>
 "nnoremap <silent> <F12> :wa<CR>:! time scala problem082.scala<CR>
 "inoremap <silent> <F12> <ESC>:wa<CR>:! time scala problem082.scala<CR>
 nnoremap <silent> <F12> :wa<CR>:! cd build; make -j2 && ./dijkstra<CR>
 inoremap <silent> <F12> <ESC>:wa<CR>:! cd build; make -j2 && ./dijkstra<CR>
-
-
 
 " Search mappings: These will make it so that going to the next one in a
 " " search will center on the line it's found in.
@@ -219,10 +214,7 @@ map n nzz
 " imap <Up> <Esc>gki
 " imap <Down> <Esc>gji
 
-" set paste
-
 set dir=~/.vim/swap
-
 
 if &term =~ '^screen'
     " tmux will send xterm-style keys when its xterm-keys option is on
