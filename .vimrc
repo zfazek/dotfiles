@@ -1,44 +1,15 @@
-" All system-wide defaults are set in $VIMRUNTIME/debian.vim (usually just
-" /usr/share/vim/vimcurrent/debian.vim) and sourced by the call to :runtime
-" you can find below.  If you wish to change any of those settings, you should
-" do it in this file (/etc/vim/vimrc), since debian.vim will be overwritten
-" everytime an upgrade of the vim packages is performed.  It is recommended to
-" make changes after sourcing debian.vim since it alters the value of the
-" 'compatible' option.
+set nocompatible
 
-" This line should not be removed as it ensures that various options are
-" properly set to work with the Vim-related packages available in Debian.
-runtime! debian.vim
+filetype plugin indent on
 
-set nocompatible              " be iMproved, required
-
-filetype plugin indent on    " required
-
-" Uncomment the next line to make Vim more Vi-compatible
-" NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
-" options, so any other options should be set AFTER setting 'compatible'.
-"set compatible
-
-" Vim5 and later versions support syntax highlighting. Uncommenting the next
-" line enables syntax highlighting by default.
 if has("syntax")
   syntax on
 endif
-
-" If using a dark background within the editing area and syntax highlighting
-" turn on this option as well
-"set background=dark
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
-
-" Uncomment the following to have Vim load indentation rules and plugins
-" according to the detected filetype.
-if has("autocmd")
-  filetype plugin indent on
 endif
 
 " The following are commented out as they cause vim to behave a lot
@@ -50,15 +21,11 @@ set smartcase        " Do smart case matching
 set incsearch        " Incremental search
 set showmatch
 set hlsearch
-"set autowrite        " Automatically save before commands like :next and :make
-"set hidden             " Hide buffers when they are abandoned
 set mouse=a        " Enable mouse usage (all modes)
 set number
 
-" Source a global configuration file if available
-if filereadable("/etc/vim/vimrc.local")
-  source /etc/vim/vimrc.local
-endif
+set path=$PWD/**
+set dir=~/.vim/swap
 
 set tabstop=4
 set shiftwidth=4
@@ -72,23 +39,11 @@ set listchars=tab:>.,trail:.,extends:>,precedes:<,nbsp:.
 " Indent html doc
 :let g:html_indent_inctags = "html,body,head,tbody"
 
-au BufNewFile,BufRead *.ttcn set filetype=ttcn
-au BufNewFile,BufRead *.ttcnpp set filetype=ttcn
-au BufNewFile,BufRead *.ttcnin set filetype=ttcn
-au BufNewFile,BufRead *.log set filetype=log
-au BufNewFile,BufRead *.cfg set filetype=cpp
-
-" ctags in new tab
-"map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-map <silent> <C-\> :tab tag <C-r><C-w><CR>:execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
-
 " moving among tabs
 nnoremap <C-Left> :tabprevious<CR>
 inoremap <C-Left> <ESC>:tabprevious<CR>i
 nnoremap <C-Right> :tabnext<CR>
 inoremap <C-Right> <ESC>:tabnext<CR>i
-nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
-nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . tabpagenr()<CR>
 
 set tabpagemax=30
 
@@ -104,18 +59,15 @@ inoremap <silent> <C-y> <ESC><C-y>i
 au FocusLost * :wa
 au Cursormoved * checktime
 
-
 set encoding=utf-8
 set scrolloff=5
 set autoindent
 set showmode
 set showcmd
-set nohidden
 set hidden
 set wildmenu
 set wildmode=list:longest,full
-set visualbell
-"set cul
+
 hi CursorLine term=none cterm=none ctermbg=7
 set ttyfast
 set ruler
@@ -123,8 +75,6 @@ set backspace=indent,eol,start
 set laststatus=2
 "set statusline=%F%m%r%h%w\ [%l,%v][%p%%]
 "set statusline=%2*%n\|%<%*%-.40F%2*\|\ %2*%M\ %3*%=%1*\ %1*%2.6l%2*x%1*%1.9(%c%V%)%2*[%1*%P%2*]%1*%2B
-"set relativenumber
-set tags=tags
 
 "Disable search highlighting with a single keypress:
 map <silent> - :nohls<cr>
@@ -150,17 +100,9 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-let g:clipbrdDefaultReg = '+'
-" copy to clipboard
-nnoremap <silent> <C-c> "+y
-
-" paste from clipboard
-nnoremap <silent> <C-v> "+p
-
 " completion
 inoremap <TAB><TAB> <C-n>
 set ofu=syntaxcomplete#Complete
-"inoremap <Tab> <C-R>=SuperCleverTab()<cr>
 
 " save all files
 nnoremap <silent> <F2> :wa<CR>
@@ -171,16 +113,11 @@ nnoremap <silent> <S-F2> :Rexplore<CR>
 inoremap <silent> <S-F2> <ESC>:Rexplore<CR>
 
 nnoremap <F3> *
-nnoremap <S-F3> #
-
 inoremap <F3> <ESC>*i
+
+nnoremap <S-F3> #
 inoremap <S-F3> <ESC>#i
 
-nnoremap <silent> <F4> :Rgrep<CR>
-let Grep_Default_Filelist = '*.cc'
-
-" save session info
-" nnoremap <F5> :mksession! ~/today_vim.ses
 nnoremap <F5> :buffers<CR>:buffer<Space>
 inoremap <F5> <ESC>:buffers<CR>:buffer<Space>
 
@@ -189,8 +126,6 @@ inoremap <F6> <ESC>:e.<CR>
 
 map <F8> :NERDTreeToggle<CR>
 
-map <F9> :TlistToggle<CR>
-
 nnoremap <F10> :! find . -name \* \| ctags-exuberant -L-<CR>
 inoremap <F10> <ESC>:! find . -name \* \| ctags-exuberant -L-<CR>
 
@@ -198,13 +133,10 @@ inoremap <F10> <ESC>:! find . -name \* \| ctags-exuberant -L-<CR>
 nnoremap <S-F11> :q<CR>
 inoremap <S-F11> <ESC>:q<CR>
 
-"nnoremap <silent> <F12> :wa<CR>:! time scala problem082.scala<CR>
-"inoremap <silent> <F12> <ESC>:wa<CR>:! time scala problem082.scala<CR>
-nnoremap <silent> <F12> :wa<CR>:! cd build; make -j2 && ./dijkstra<CR>
-inoremap <silent> <F12> <ESC>:wa<CR>:! cd build; make -j2 && ./dijkstra<CR>
+nnoremap <silent> <F12> :wa<CR>:! cd build; make -j2 && ./foo<CR>
+inoremap <silent> <F12> <ESC>:wa<CR>:! cd build; make -j2 && ./foo<CR>
 
-" Search mappings: These will make it so that going to the next one in a
-" " search will center on the line it's found in.
+" search will center on the line it's found in.
 map N Nzz
 map n nzz
 
@@ -214,8 +146,6 @@ map n nzz
 " imap <Up> <Esc>gki
 " imap <Down> <Esc>gji
 
-set dir=~/.vim/swap
-
 if &term =~ '^screen'
     " tmux will send xterm-style keys when its xterm-keys option is on
     execute "set <xUp>=\e[1;*A"
@@ -223,21 +153,3 @@ if &term =~ '^screen'
     execute "set <xRight>=\e[1;*C"
     execute "set <xLeft>=\e[1;*D"
 endif
-
-let g:EclimCompletionMethod = 'omnifunc'
-
-function! SuperCleverTab()
-    if strpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
-        return "\<Tab>"
-    else
-        if &omnifunc != ''
-            return "\<C-X>\<C-O>"
-        elseif &dictionary != ''
-            return "\<C-K>"
-        else
-            return "\<C-N>"
-        endif
-    endif
-endfunction
-
-
