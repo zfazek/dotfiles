@@ -21,7 +21,7 @@ set smartcase        " Do smart case matching
 set incsearch        " Incremental search
 set showmatch
 set hlsearch
-set mouse-=a        " Enable mouse usage (all modes)
+set mouse=a        " Enable mouse usage (all modes)
 set number
 
 set path=$PWD/**
