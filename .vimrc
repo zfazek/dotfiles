@@ -32,6 +32,8 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
+set path=**
+
 set list
 "set listchars=tab:>·
 set listchars=tab:>.,trail:.,extends:>,precedes:<,nbsp:.
