@@ -1,13 +1,13 @@
 #!/bin/bash
 
-export UID=$(id -u)
-export GID=$(id -g)
+export uid=$(id -u)
+export gid=$(id -g)
 
 docker run \
     --interactive \
     --tty \
     --hostname docker \
-    --user $UID:$GID \
+    --user $uid:$gid \
     --workdir="/home/$USER" \
     --volume="$HOME:$HOME" \
     --volume="/etc/group:/etc/group:ro" \
