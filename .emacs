@@ -10,6 +10,15 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+(unless window-system
+    (xterm-mouse-mode t)
+    (global-set-key [mouse-4] (lambda ()
+                              (interactive)
+                              (scroll-down 3)))
+    (global-set-key [mouse-5] (lambda ()
+                              (interactive)
+                              (scroll-up 3))))
+
 (use-package key-chord)
 
 (require 'key-chord)
@@ -19,6 +28,7 @@
 ;; (key-chord-define-global "jj" 'newline-and-indent)
 
 (setq-default show-trailing-whitespace t)
+(setq-default tab-width 4)
 
 (global-auto-revert-mode t)
 (show-paren-mode t)
@@ -36,7 +46,6 @@
 (global-set-key (kbd "<f12>") 'run-shell-command)
 
 (global-set-key (kbd "<RET>") 'newline-and-indent)
-(global-set-key (kbd "C-a") 'mark-whole-buffer)
 
 (global-set-key (kbd "<C-right>") 'next-buffer)
 (global-set-key (kbd "<C-left>") 'previous-buffer)
@@ -47,6 +56,9 @@
 ;; (global-set-key (kbd "<M-right>") 'windmove-right)
 
 (global-set-key "%" 'match-paren)
+
+(setq c-default-style "linux"
+          c-basic-offset 4)
 
 (defun match-paren (arg)
     "Go to the matching paren if on a paren; otherwise insert %."
