@@ -100,12 +100,13 @@ map <silent> <C-\> :tab tag <C-r><C-w><CR>:execute 'silent! tabmove ' . (tabpage
 " Map line splitting
 imap <C-c> <CR><Esc>O
 
+let g:BASH_Ctrl_j = 'off'
+
 " moving among tabs
 nnoremap <C-Left> :tabprevious<CR>
 inoremap <C-Left> <ESC>:tabprevious<CR>i
 nnoremap <C-Right> :tabnext<CR>
 inoremap <C-Right> <ESC>:tabnext<CR>i
-let g:BASH_Ctrl_j = 'off'
 nnoremap <silent> <A-Down> :tabprevious<CR>
 inoremap <silent> <A-Down> <ESC>:tabprevious<CR>i
 nnoremap <silent> <A-Up> :tabnext<CR>
@@ -158,12 +159,13 @@ inoremap jj <ESC>
 " quit quicly
 nnoremap qq :qa<CR>
 
-"open new vertical window
-nnoremap <leader>v <C-w>v<C-w>l
 nnoremap <leader>f :YcmCompleter FixIt<CR>
 
+"open new vertical window
+nnoremap <leader>v <C-w>v<C-w>l
+
 "open new horizontal window
-nnoremap <leader>s <C-w>s<C-w>j 
+nnoremap <leader>s <C-w>s<C-w>j
 
 " close window
 nnoremap <leader>q :q<CR>
@@ -207,11 +209,11 @@ inoremap <F6> <ESC>:e.<CR>
 
 map <F8> :NERDTreeToggle<CR>
 
-nnoremap <F10> :! find . -not -path "*/build/*" -a -name \* \| /home/zfazek/git/ctags/ctags -L-<CR>
+nnoremap <F10> :! find . -not -path "*/build/*" -a -name \* \| ~/git/ctags/ctags -L-<CR>
 
 " close window
-nnoremap <S-F11> :q<CR>
-inoremap <S-F11> <ESC>:q<CR>
+nnoremap <S-F11> :q<CR>1gt
+inoremap <S-F11> <ESC>:q<CR>1gt
 
 "nnoremap <silent> <F12> :wa<CR>:! time scala problem082.scala<CR>
 "inoremap <silent> <F12> <ESC>:wa<CR>:! time scala problem082.scala<CR>
