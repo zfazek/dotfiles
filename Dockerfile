@@ -3,7 +3,7 @@
 FROM ubuntu:latest
 
 # Avoid warnings by switching to noninteractive
-ENV UBUNTU_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Or your actual UID, GID on Linux if not the default 1000
 ARG USERNAME=zoli
@@ -17,8 +17,9 @@ RUN apt-get update \
     build-essential cmake cppcheck valgrind clang g++ libboost-dev \
     vim exuberant-ctags mc htop \
     libglew-dev libglfw3-dev libglm-dev libfreetype6-dev \
+    nvim python3-nvim python3-dev \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
 # Switch back to dialog for any ad-hoc use of apt-get
-ENV UBUNTU_FRONTEND=
+ENV DEBIAN_FRONTEND=
