@@ -23,9 +23,7 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-
 Plugin 'ycm-core/YouCompleteMe'
-
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -71,6 +69,7 @@ set showmatch
 set hlsearch
 set mouse=a        " Enable mouse usage (all modes)
 set number
+set completeopt-=preview
 
 set path=$PWD/**
 set dir=~/.vim/swap
@@ -86,20 +85,7 @@ set listchars=tab:>.,trail:.,extends:>,precedes:<,nbsp:.
 
 " Indent html doc
 " let g:html_indent_inctags = "html,body,head,tbody"
-" let g:ycm_rust_src_path = '/home/zfazek/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/'
-" let g:ycm_rust_src_path = '/home/zfazek/git/rust/'
-" let g:ycm_echo_current_diagnostic = 1
 let g:ycm_confirm_extra_conf = 0
-
-let g:ycm_language_server =
-\ [
-\   {
-\     'name': 'rust',
-\     'cmdline': ['rust-analyzer'],
-\     'filetypes': ['rust'],
-\     'project_root_files': ['Cargo.toml']
-\   }
-\ ]
 
 au BufNewFile,BufRead *.ttcn set filetype=ttcn
 au BufNewFile,BufRead *.ttcnpp set filetype=ttcn
@@ -229,10 +215,10 @@ inoremap <S-F11> <ESC>:q<CR>
 
 "nnoremap <silent> <F12> :wa<CR>:! time scala problem082.scala<CR>
 "inoremap <silent> <F12> <ESC>:wa<CR>:! time scala problem082.scala<CR>
-nnoremap <silent> <F12> :wa<CR>:! g++ -std=c++17 -O3 accumulate.cc && time ./a.out<CR>
-inoremap <silent> <F12> <ESC>:wa<CR>:! g++ -std=c++17 -O3 accumulate.cc && time ./a.out<CR>
-"nnoremap <silent> <F12> :wa<CR>:! rustc rust/src/main.rs && time ./aoc01<CR>
-"inoremap <silent> <F12> <ESC>:wa<CR>:! rustc rust/src/main.rs && time ./aoc01<CR>
+"nnoremap <silent> <F12> :wa<CR>:! g++ -std=c++17 -O3 accumulate.cc && time ./a.out<CR>
+"inoremap <silent> <F12> <ESC>:wa<CR>:! g++ -std=c++17 -O3 accumulate.cc && time ./a.out<CR>
+nnoremap <silent> <F12> :wa<CR>:! cargo build && time cargo run<CR>
+inoremap <silent> <F12> <ESC>:wa<CR>:! cargo build && time cargo run<CR>
 
 " Search mappings: These will make it so that going to the next one in a
 " " search will center on the line it's found in.
