@@ -10,7 +10,7 @@
 " properly set to work with the Vim-related packages available in Debian.
 runtime! debian.vim
 
-colorscheme torte
+colorscheme delek
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -23,8 +23,12 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'ycm-core/YouCompleteMe'
+if v:version > 801
+    Plugin 'ycm-core/YouCompleteMe'
+endif
 Plugin 'preservim/nerdtree'
+Plugin 'fatih/vim-go'
+Plugin 'tpope/vim-fugitive'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -82,7 +86,9 @@ set expandtab
 
 set list
 " set listchars=tab:>·
-set listchars=tab:>.,trail:.,extends:>,precedes:<,nbsp:.
+set listchars=tab:.\ ,trail:.,extends:>,precedes:<,nbsp:.
+au BufNewFile,BufRead *.go set listchars=tab:\ \ ,trail:.,extends:>,precedes:<,nbsp:.
+au BufNewFile,BufRead *.java set listchars=tab:\ \ ,trail:.,extends:>,precedes:<,nbsp:.
 
 " Indent html doc
 " let g:html_indent_inctags = "html,body,head,tbody"
@@ -112,8 +118,8 @@ nnoremap <silent> <A-Down> :tabprevious<CR>
 inoremap <silent> <A-Down> <ESC>:tabprevious<CR>i
 nnoremap <silent> <A-Up> :tabnext<CR>
 inoremap <silent> <A-Up> <ESC>:tabnext<CR>i
-nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
-nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . tabpagenr()<CR>
+nnoremap <silent> <C-A-Left> :-tabmove<CR>
+nnoremap <silent> <C-A-Right> :+tabmove<CR>
 
 set tabpagemax=30
 
@@ -121,10 +127,11 @@ set tabpagemax=30
 inoremap <silent> <C-e> <ESC><C-e>i
 inoremap <silent> <C-y> <ESC><C-y>i
 
-"set wrap
-set textwidth=79
-set formatoptions=qrn1
-set colorcolumn=81
+" set wrap
+
+" set textwidth=79
+" set formatoptions=qrn1
+" set colorcolumn=81
 
 au FocusLost * :wa
 au Cursormoved * checktime
@@ -227,8 +234,6 @@ inoremap <silent> <F12> <ESC>:wa<CR>:! cargo build && time cargo run<CR>
 " " search will center on the line it's found in.
 map N Nzz
 map n nzz
-
-inoremap { {<CR>}<ESC>ko
 
 " move one DISPLAY line in case of long line
 " nmap <Up> gk
