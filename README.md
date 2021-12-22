@@ -1,4 +1,4 @@
-config_files
-============
+dotfiles
+========
 
 vim, tmux, etc config files
