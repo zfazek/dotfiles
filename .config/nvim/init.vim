@@ -12,18 +12,24 @@
 
 call plug#begin('~/.vim/plugged')
 
-" Collection of common configurations for the Nvim LSP client
 Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
 
 " Extentions to built-in LSP, for example, providing type inlay hints
 Plug 'tjdevries/lsp_extensions.nvim'
 
-" Autocompletion framework for built-in LSP
-Plug 'nvim-lua/completion-nvim'
-
 Plug 'preservim/nerdtree'
 
 Plug 'tomasiser/vim-code-dark'
+" Plug 'joshdick/onedark.vim'
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+" Plug 'airblade/vim-rooter'
 
 call plug#end()
 
@@ -48,47 +54,105 @@ set shortmess+=c
 " https://github.com/neovim/nvim-lspconfig#rust_analyzer
 
 lua <<EOF
+  -- Setup nvim-cmp.
+  local nvim_lsp = require('lspconfig')
+  local cmp = require'cmp'
+  local servers = { 'clangd', 'rust_analyzer' }
+
+  cmp.setup({
+    snippet = {
+      -- REQUIRED - you must specify a snippet engine
+      expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+        -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
+      end,
+    },
+    mapping = {
+      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+      ['<C-e>'] = cmp.mapping({
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
+      }),
+      -- Accept currently selected item. If none selected, `select` first item.
+      -- Set `select` to `false` to only confirm explicitly selected items.
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    },
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'vsnip' }, -- For vsnip users.
+      -- { name = 'luasnip' }, -- For luasnip users.
+      -- { name = 'ultisnips' }, -- For ultisnips users.
+      -- { name = 'snippy' }, -- For snippy users.
+    }, {
+      { name = 'buffer' },
+    })
+  })
+
+  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline('/', {
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+
+  -- Setup lspconfig.
+  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+  require('lspconfig')['clangd'].setup {
+    capabilities = capabilities
+  }
+
+for _, lsp in ipairs(servers) do
+    nvim_lsp[lsp].setup {
+        capabilities = capabilities,
+    }
+end
+EOF
+
+lua <<EOF
 
 -- lspconfig object
-local lspconfig = require'lspconfig'
+-- local lspconfig = require'lspconfig'
 
 -- function to attach completion when setting up lsp
-local on_attach = function(client)
-  require'completion'.on_attach(client)
-end
+-- local on_attach = function(client)
+--   require'completion'.on_attach(client)
+-- end
 
 -- Enable rust_analyzer
-lspconfig.rust_analyzer.setup {
-  on_attach = require'completion'.on_attach;
-  root_dir = lspconfig.util.root_pattern(".");
-}
+-- lspconfig.rust_analyzer.setup {
+--   on_attach = require'completion'.on_attach;
+--   root_dir = lspconfig.util.root_pattern(".");
+-- }
 
-lspconfig.ccls.setup {
-  init_options = {
-    compilationDatabaseDirectory = "build";
-    index = {
-      threads = 0;
-    };
-    clang = {
-      excludeArgs = { "-frounding-math"} ;
-    };
-  }
-}
-
-lspconfig.clangd.setup {
-on_attach = require'completion'.on_attach;
-}
+-- lspconfig.clangd.setup {
+--   on_attach = require'completion'.on_attach;
+-- }
 
 -- Enable diagnostics
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = false,
-    signs = true,
-    update_in_insert = true,
-  }
-)
+-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+--   vim.lsp.diagnostic.on_publish_diagnostics, {
+--     virtual_text = false,
+--     signs = true,
+--     update_in_insert = true,
+--   }
+-- )
 
-lspconfig.gopls.setup {}
+-- lspconfig.gopls.setup {}
 -- cmd = {"gopls", "serve"},
 --   settings = {
 --     gopls = {
@@ -146,16 +210,21 @@ set signcolumn=yes
 " 300ms of no cursor movement to trigger CursorHold
 set updatetime=300
 
+autocmd VimLeave * tabnext 1
+autocmd VimLeave * NERDTreeClose
+" autocmd VimLeave * mksession! Session.vim
+" autocmd VimEnter * source Session.vim
+" autocmd VimEnter * NERDTree
+
 " Show diagnostic popup on cursor hover
-autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+" autocmd CursorHold * lua vim.diagnostic.open_float()
 
 " Goto previous/next diagnostic warning/error
 nnoremap <silent> g[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <silent> g] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 
 " Enable type inlay hints
-autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
-\ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment" }
+" autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * lua require'lsp_extensions'.inlay_hints{ prefix = '=>', highlight = "Comment" }
 
 set showcmd        " Show (partial) command in status line.
 set showmatch        " Show matching brackets.
@@ -237,8 +306,6 @@ inoremap jj <ESC>
 " quit quicly
 nnoremap qq :qa<CR>
 
-nnoremap <leader>f :YcmCompleter FixIt<CR>
-
 "open new vertical window
 nnoremap <leader>v <C-w>v<C-w>l
 
@@ -286,6 +353,8 @@ nnoremap <F6> :e.<CR>
 inoremap <F6> <ESC>:e.<CR>
 
 map <F8> :NERDTreeToggle<CR>
+map <F9> :FZF<CR>
+nnoremap <S-F9> :source Session.vim<CR>:tabnext 1<CR>:NERDTree<CR>
 
 nnoremap <F10> :! find . -not -path "*/build/*" -a -name \* \| ~/git/ctags/ctags -L-<CR>
 
@@ -297,10 +366,17 @@ inoremap <S-F11> <ESC>:q<CR>1gt
 "inoremap <silent> <F12> <ESC>:wa<CR>:! time scala problem082.scala<CR>
 "nnoremap <silent> <F12> :wa<CR>:! g++ -std=c++17 -O3 accumulate.cc && time ./a.out<CR>
 "inoremap <silent> <F12> <ESC>:wa<CR>:! g++ -std=c++17 -O3 accumulate.cc && time ./a.out<CR>
-nnoremap <silent> <F12> :wa<CR>:! cargo build && time cargo run<CR>
-inoremap <silent> <F12> <ESC>:wa<CR>:! cargo build && time cargo run<CR>
+"nnoremap <silent> <F12> :wa<CR>:! cargo build && time ./target/debug/rust<CR>
+"inoremap <silent> <F12> <ESC>:wa<CR>:! cargo build && time ./targe/debug/rust<CR>
+nnoremap <silent> <F12> :wa<CR>:! g++ -std=c++17 -O3 aoc20.cc && time ./a.out<CR>
+inoremap <silent> <F12> <ESC>:wa<CR>:! g++ -std=c++17 -O3 aoc20.cc && time ./a.out<CR>
 
 " Search mappings: These will make it so that going to the next one in a
 " " search will center on the line it's found in.
 map N Nzz
 map n nzz
+
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
