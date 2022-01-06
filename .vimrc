@@ -18,7 +18,9 @@ call plug#end()
 syntax enable
 filetype plugin indent on
 
-colorscheme codedark
+if v:version < 801
+  colorscheme codedark
+endif
 
 autocmd VimLeave * tabnext 1
 autocmd VimLeave * NERDTreeClose
@@ -193,3 +195,10 @@ if filereadable($HOME."/.config/nvim/coc.vim")
     execute "source ".$HOME."/.config/nvim/coc.vim"
 endif
 
+if &term =~ '^screen'
+    " tmux will send xterm-style keys when its xterm-keys option is on
+    execute "set <xUp>=\e[1;*A"
+    execute "set <xDown>=\e[1;*B"
+    execute "set <xRight>=\e[1;*C"
+    execute "set <xLeft>=\e[1;*D"
+endif
