@@ -1,7 +1,7 @@
 " Install vim-plug
 " curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-" Install nodejs >= 12.12: curl -sL install-node.vercel.app/lts | bash
+" Install nodejs >= 12.12: curl -sL install-node.vercel.app/lts | sudo bash
 " :CocInstall coc-rust-analyzer coc-clangd
 
 call plug#begin('~/.vim/plugged')
@@ -22,6 +22,8 @@ if v:version < 801
   colorscheme codedark
 endif
 
+let mapleader = "\<Space>"
+
 autocmd VimLeave * tabnext 1
 autocmd VimLeave * NERDTreeClose
 " autocmd VimLeave * mksession! Session.vim
@@ -33,9 +35,17 @@ autocmd Cursormoved * checktime
 
 autocmd filetype c setlocal tabstop=8 shiftwidth=8 softtabstop=8
 
+" Leave paste mode when leaving insert mode
+autocmd InsertLeave * set nopaste
+
+
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
 " set completeopt-=preview
+
+" Permanent undo
+set undodir=~/.vim/vimdid
+set undofile
 
 " Avoid showing extra messages when using completion
 set shortmess+=c
@@ -94,6 +104,29 @@ set ofu=syntaxcomplete#Complete
 " set listchars=tab:>·
 " set listchars=tab:>.,trail:.,extends:>,precedes:<,nbsp:.
 
+" <leader><leader> toggles between buffers
+nnoremap <leader><leader> <c-^>
+
+" Move by line
+nnoremap j gj
+nnoremap k gk
+
+" <leader>, shows/hides hidden characters
+nnoremap <leader>, :set invlist<cr>
+
+" <leader>s for Rg search
+noremap <leader>g :Rg<CR>
+
+" Open hotkeys
+map <C-p> :Files<CR>
+nmap <leader>; :Buffers<CR>
+
+" Quick-save
+nmap <leader>w :wa<CR>
+
+" <leader>, shows/hides hidden characters
+nnoremap <leader>, :set invlist<cr>
+
 " moving among tabs
 nnoremap <C-Left> :tabprevious<CR>
 inoremap <C-Left> <ESC>:tabprevious<CR>i
@@ -113,7 +146,11 @@ inoremap <silent> <C-y> <ESC><C-y>i
 inoremap { {}<ESC>i
 
 "Disable search highlighting with a single keypress:
-map <silent> - :nohls<cr>
+map <silent> - :nohlsearch<cr>
+
+" Jump to start and end of line using the home row keys
+map H ^
+map L $
 
 " back to normal mode
 inoremap jj <ESC>
@@ -187,7 +224,7 @@ map N Nzz
 map n nzz
 
 if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+  autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g'\"" | endif
 endif
 
