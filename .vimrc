@@ -213,10 +213,21 @@ inoremap <S-F11> <ESC>:q<CR>1gt
 
 "nnoremap <silent> <F12> :wa<CR>:! cargo build && time ./target/debug/rust<CR>
 "inoremap <silent> <F12> <ESC>:wa<CR>:! cargo build && time ./targe/debug/rust<CR>
-"nnoremap <silent> <F12> :wa<CR>:! g++ -std=c++17 -O3 aoc24.cc && time ./a.out<CR>
-"inoremap <silent> <F12> <ESC>:wa<CR>:! g++ -std=c++17 -O3 aoc24.cc && time ./a.out<CR>
-nnoremap <silent> <F12> :wa<CR>:! cargo build --bin aoc202124j --release && time ./target/release/aoc202124j<CR>
-inoremap <silent> <F12> <ESC>:wa<CR>:! cargo build --bin aoc202124j --release && time ./target/release/aoc202124j<CR>
+"nnoremap <silent> <F12> :wa<CR>:! time g++ -std=c++17 -O2 aoc01.cc && time ./a.out<CR>
+"inoremap <silent> <F12> <ESC>:wa<CR>:! time g++ -std=c++17 -O2 aoc01.cc && time ./a.out<CR>
+"nnoremap <silent> <F12> :wa<CR>:! time gcc -O2 -g -Wall aoc01.c && time ./a.out<CR>
+"inoremap <silent> <F12> <ESC>:wa<CR>:! time gcc -O2 -g -Wall aoc01.c && time ./a.out<CR>
+nnoremap <silent> <F12> :wa<CR>:! time make run<CR>
+inoremap <silent> <F12> <ESC>:wa<CR>:! time make run<CR>
+nnoremap <silent> <S-F12> :wa<CR>:! cargo build --release && time ./target/release/rust<CR>
+inoremap <silent> <S-F12> <ESC>:wa<CR>:! cargo build --release && time ./target/release/rust<CR>
+"nnoremap <silent> <F12> :wa<CR>:! cargo run<CR>
+"inoremap <silent> <F12> <ESC>:wa<CR>:! cargo run<CR>
+"nnoremap <silent> <S-F12> :wa<CR>:! cargo run --release<CR>
+"inoremap <silent> <S-F12> <ESC>:wa<CR>:! cargo run --release<CR>
+
+nnoremap <C-a> :wa<CR>:! time make run<CR>
+inoremap <C-a> <ESC>:wa<CR>:! time make run<CR>
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.

@@ -6,7 +6,7 @@ PROGRAM = a.out
 
 CPP_FILES := $(shell find . -not -path "*/build/*" -a -name "*.cpp")
 OBJS := $(patsubst %.cpp, %.o, $(CPP_FILES))
-CXXFLAGS = -std=c++14 -Wall -Wextra -g -O2
+CXXFLAGS = -std=c++17 -Wall -Wextra -g -O2
 CPPFLAGS =
 LDFLAGS =
 LDLIBS =
