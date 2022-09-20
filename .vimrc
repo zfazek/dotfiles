@@ -114,8 +114,10 @@ nnoremap k gk
 " <leader>, shows/hides hidden characters
 nnoremap <leader>, :set invlist<cr>
 
-" <leader>s for Rg search
+" <leader>g for Rg search
 noremap <leader>g :Rg<CR>
+
+noremap <leader>f :GFiles<CR>
 
 " Open hotkeys
 map <C-p> :Files<CR>
@@ -202,7 +204,7 @@ inoremap <F6> <ESC>:e.<CR>
 
 map <F8> :NERDTreeToggle<CR>
 
-map <F9> :FZF<CR>
+map <F9> :GFiles<CR>
 nnoremap <S-F9> :source Session.vim<CR>:tabnext 1<CR>:NERDTree<CR>
 
 " nnoremap <F10> :! find . -not -path "*/build/*" -a -name \* \| ~/git/ctags/ctags -L-<CR>
@@ -213,21 +215,25 @@ inoremap <S-F11> <ESC>:q<CR>1gt
 
 "nnoremap <silent> <F12> :wa<CR>:! cargo build && time ./target/debug/rust<CR>
 "inoremap <silent> <F12> <ESC>:wa<CR>:! cargo build && time ./targe/debug/rust<CR>
-"nnoremap <silent> <F12> :wa<CR>:! time g++ -std=c++17 -O2 aoc01.cc && time ./a.out<CR>
-"inoremap <silent> <F12> <ESC>:wa<CR>:! time g++ -std=c++17 -O2 aoc01.cc && time ./a.out<CR>
+"nnoremap <silent> <F12> :wa<CR>:! time g++ -std=c++17 -O2 main.cc && time ./a.out<CR>
+"inoremap <silent> <F12> <ESC>:wa<CR>:! time g++ -std=c++17 -O2 main.cc && time ./a.out<CR>
 "nnoremap <silent> <F12> :wa<CR>:! time gcc -O2 -g -Wall aoc01.c && time ./a.out<CR>
 "inoremap <silent> <F12> <ESC>:wa<CR>:! time gcc -O2 -g -Wall aoc01.c && time ./a.out<CR>
-nnoremap <silent> <F12> :wa<CR>:! time make run<CR>
-inoremap <silent> <F12> <ESC>:wa<CR>:! time make run<CR>
-nnoremap <silent> <S-F12> :wa<CR>:! cargo build --release && time ./target/release/rust<CR>
-inoremap <silent> <S-F12> <ESC>:wa<CR>:! cargo build --release && time ./target/release/rust<CR>
+"nnoremap <silent> <F12> :wa<CR>:! cd build; make && time ./checkers<CR>
+"inoremap <silent> <F12> <ESC>:wa<CR>:! cd build; make && time ./checkers<CR>
+"nnoremap <silent> <F12> :wa<CR>:! cargo build --release && time ./target/release/rust<CR>
+"inoremap <silent> <F12> <ESC>:wa<CR>:! cargo build --release && time ./target/release/rust<CR>
 "nnoremap <silent> <F12> :wa<CR>:! cargo run<CR>
 "inoremap <silent> <F12> <ESC>:wa<CR>:! cargo run<CR>
-"nnoremap <silent> <S-F12> :wa<CR>:! cargo run --release<CR>
-"inoremap <silent> <S-F12> <ESC>:wa<CR>:! cargo run --release<CR>
+nnoremap <silent> <S-F12> :wa<CR>:! time cargo run --release<CR>
+inoremap <silent> <S-F12> <ESC>:wa<CR>:! time cargo run --release<CR>
+nnoremap <silent> <F12> :wa<CR>:! time cargo run<CR>
+inoremap <silent> <F12> <ESC>:wa<CR>:! time cargo run<CR>
 
-nnoremap <C-a> :wa<CR>:! time make run<CR>
-inoremap <C-a> <ESC>:wa<CR>:! time make run<CR>
+"nnoremap <C-a> :wa<CR>:! cd build; make && time ./checkers<CR>
+"inoremap <C-a> <ESC>:wa<CR>:! cd build; make && time ./checkers<CR>
+nnoremap <C-a> :wa<CR>:! time cargo run<CR>
+inoremap <C-a> <ESC>:wa<CR>:! time cargo run<CR>
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
