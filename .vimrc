@@ -99,6 +99,7 @@ set backspace=indent,eol,start
 set laststatus=2
 set tags=tags
 set ofu=syntaxcomplete#Complete
+set statusline=%f%m%r%h%w\ [%Y]\ [0x%02.2B]%<\ %F\ (%v,%l)\ %3p%%\ of\ %L\ lines>
 
 " set list
 " set listchars=tab:>·
@@ -147,6 +148,9 @@ inoremap <silent> <C-y> <ESC><C-y>i
 
 inoremap { {}<ESC>i
 
+inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<TAB>"
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>"
+
 "Disable search highlighting with a single keypress:
 map <silent> - :nohlsearch<cr>
 
@@ -174,6 +178,8 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+let g:coc_start_at_startup=1
 
 let g:clipbrdDefaultReg = '+'
 " copy to clipboard
