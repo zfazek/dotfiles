@@ -2,7 +2,7 @@
 " curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 " Install nodejs >= 12.12: curl -sL install-node.vercel.app/lts | sudo bash
-" :CocInstall coc-rust-analyzer coc-clangd
+" :CocInstall coc-rust-analyzer coc-clangd coc-go coc-java
 
 call plug#begin('~/.vim/plugged')
 
@@ -18,9 +18,7 @@ call plug#end()
 syntax enable
 filetype plugin indent on
 
-if v:version < 801
-  colorscheme codedark
-endif
+colorscheme evening
 
 let mapleader = "\<Space>"
 
@@ -33,7 +31,8 @@ autocmd VimLeave * NERDTreeClose
 autocmd FocusLost * :wa
 autocmd Cursormoved * checktime
 
-autocmd filetype c setlocal tabstop=8 shiftwidth=8 softtabstop=8
+autocmd filetype c setlocal tabstop=4 shiftwidth=4 softtabstop=4
+" autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
 
 " Leave paste mode when leaving insert mode
 autocmd InsertLeave * set nopaste
@@ -79,9 +78,9 @@ set softtabstop=4
 set expandtab
 
 "set wrap
-set textwidth=99
+set textwidth=79
 set formatoptions=qrn1
-set colorcolumn=101
+"set colorcolumn=81
 
 set encoding=utf-8
 set scrolloff=5
@@ -183,10 +182,10 @@ let g:coc_start_at_startup=1
 
 let g:clipbrdDefaultReg = '+'
 " copy to clipboard
-nnoremap <silent> <C-c> "+y
+" nnoremap <silent> <C-c> "+y
 
 " paste from clipboard
-nnoremap <silent> <C-v> "+p
+" nnoremap <silent> <C-v> "+p
 
 " save all files
 nnoremap <silent> <F2> :wa<CR>
@@ -221,25 +220,31 @@ inoremap <S-F11> <ESC>:q<CR>1gt
 
 "nnoremap <silent> <F12> :wa<CR>:! cargo build && time ./target/debug/rust<CR>
 "inoremap <silent> <F12> <ESC>:wa<CR>:! cargo build && time ./targe/debug/rust<CR>
-"nnoremap <silent> <F12> :wa<CR>:! time g++ -std=c++17 -O2 main.cc && time ./a.out<CR>
-"inoremap <silent> <F12> <ESC>:wa<CR>:! time g++ -std=c++17 -O2 main.cc && time ./a.out<CR>
-"nnoremap <silent> <F12> :wa<CR>:! time gcc -O2 -g -Wall aoc01.c && time ./a.out<CR>
-"inoremap <silent> <F12> <ESC>:wa<CR>:! time gcc -O2 -g -Wall aoc01.c && time ./a.out<CR>
-"nnoremap <silent> <F12> :wa<CR>:! cd build; make && time ./checkers<CR>
-"inoremap <silent> <F12> <ESC>:wa<CR>:! cd build; make && time ./checkers<CR>
+"nnoremap <silent> <F12> :wa<CR>:! time g++ -std=c++17 -O0 main.cc && time ./a.out<CR>
+"inoremap <silent> <F12> <ESC>:wa<CR>:! time g++ -std=c++17 -O0 main.cc && time ./a.out<CR>
+"nnoremap <silent> <F12> :wa<CR>:! time g++ -O2 -g -Wall aoc01.cc && time ./a.out<CR>
+"inoremap <silent> <F12> <ESC>:wa<CR>:! time g++ -O2 -g -Wall aoc01.cc && time ./a.out<CR>
+"nnoremap <silent> <F12> :wa<CR>:! make && time ./a.out<CR>
+"inoremap <silent> <F12> <ESC>:wa<CR>:! make && time ./a.out<CR>
 "nnoremap <silent> <F12> :wa<CR>:! cargo build --release && time ./target/release/rust<CR>
 "inoremap <silent> <F12> <ESC>:wa<CR>:! cargo build --release && time ./target/release/rust<CR>
 "nnoremap <silent> <F12> :wa<CR>:! cargo run<CR>
 "inoremap <silent> <F12> <ESC>:wa<CR>:! cargo run<CR>
-nnoremap <silent> <S-F12> :wa<CR>:! time cargo run --release<CR>
-inoremap <silent> <S-F12> <ESC>:wa<CR>:! time cargo run --release<CR>
-nnoremap <silent> <F12> :wa<CR>:! time cargo run<CR>
-inoremap <silent> <F12> <ESC>:wa<CR>:! time cargo run<CR>
+nnoremap <silent> <S-F12> :wa<CR>:! cargo build --release && time ./target/release/rust<CR>
+inoremap <silent> <S-F12> <ESC>:wa<CR>:! cargo build --release && time ./target/release/rust<CR>
+nnoremap <silent> <F12> :wa<CR>:! cargo build && time ./target/debug/rust<CR>
+inoremap <silent> <F12> <ESC>:wa<CR>:! cargo build && time ./target/debug/rust<CR>
 
 "nnoremap <C-a> :wa<CR>:! cd build; make && time ./checkers<CR>
 "inoremap <C-a> <ESC>:wa<CR>:! cd build; make && time ./checkers<CR>
-nnoremap <C-a> :wa<CR>:! time cargo run<CR>
-inoremap <C-a> <ESC>:wa<CR>:! time cargo run<CR>
+"nnoremap <silent> <C-a> :wa<CR>:! cargo build --release && time ./target/release/rust<CR>
+"inoremap <silent> <C-a> <ESC>:wa<CR>:! cargo build --release && time ./target/release/rust<CR>
+nnoremap <C-a> :wa<CR>:! cargo build && time ./target/debug/rust<CR>
+inoremap <C-a> <ESC>:wa<CR>:! cargo build && time ./target/debug/rust<CR>
+"nnoremap <C-a> :wa<CR>:! time g++ -std=c++14 -O0 main.cc && time ./a.out<CR>
+"inoremap <C-a> <ESC>:wa<CR>:! time g++ -std=c++14 -O0 main.cc && time ./a.out<CR>
+"nnoremap <C-a> :wa<CR>:! time rustc -O main.rs -o main && time ./main<CR>
+"inoremap <C-a> <ESC>:wa<CR>:! time rustc -O main.rs -o main && time ./main<CR>
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
@@ -251,8 +256,10 @@ if has("autocmd")
     \| exe "normal! g'\"" | endif
 endif
 
-if filereadable($HOME."/.config/nvim/coc.vim")
-    execute "source ".$HOME."/.config/nvim/coc.vim"
+if v:version > 820
+    if filereadable($HOME."/.config/nvim/coc.vim")
+        execute "source ".$HOME."/.config/nvim/coc.vim"
+    endif
 endif
 
 if &term =~ '^screen'
