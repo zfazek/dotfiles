@@ -4,7 +4,6 @@
 " Install nodejs >= 12.12: curl -sL install-node.vercel.app/lts | sudo bash
 " :CocInstall coc-rust-analyzer coc-clangd coc-go coc-java
 
-syntax enable
 filetype plugin indent on
 
 colorscheme evening
