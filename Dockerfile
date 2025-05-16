@@ -1,25 +1,17 @@
-# docker build -t ubuntu .
+# docker build -t ubuntu:ezolfaz .
 
-FROM ubuntu:latest
+FROM ubuntu:25.04
 
 # Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
-
-# Or your actual UID, GID on Linux if not the default 1000
-ARG USERNAME=zoli
-# ARG USER_UID=1000
-# ARG USER_GID=$USER_UID
 
 # Configure apt and install packages
 RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils dialog 2>&1 \
     && apt-get -y install sudo procps lsb-release aptitude bash-completion \
-    build-essential cmake cppcheck valgrind clang g++ libboost-dev \
-    vim exuberant-ctags mc htop \
-    libglew-dev libglfw3-dev libglm-dev libfreetype6-dev \
-    nvim python3-nvim python3-dev \
-    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
-    && chmod 0440 /etc/sudoers.d/$USERNAME
+    build-essential cmake cppcheck valgrind clang gcc g++ libboost-dev \
+    vim mc htop neofetch luarocks \
+    git tmux unzip wget curl npm nodejs openjdk-21-jdk-headless
 
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=
