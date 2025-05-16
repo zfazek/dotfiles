@@ -85,7 +85,8 @@ return {
     end
   },
 
-  {'nvim-java/nvim-java'},
+  -- {'nvim-java/nvim-java'},
+  {'mfussenegger/nvim-jdtls'},
 
   { 'echasnovski/mini.nvim', version = false },
 
@@ -94,7 +95,7 @@ return {
   	opts = {
   		ensure_installed = {
   			"vim", "lua", "vimdoc",
-       "html", "css"
+       "html", "css", "bash"
   		},
   	},
   },

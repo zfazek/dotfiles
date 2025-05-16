@@ -31,7 +31,7 @@ set completeopt=menuone,noinsert,noselect
 " set completeopt-=preview
 
 " Permanent undo
-set undodir=~/.vim/vimdid
+set undodir=~/.vim/nvimdid
 set undofile
 
 " Avoid showing extra messages when using completion
@@ -94,28 +94,6 @@ set statusline=%f%m%r%h%w\ [%Y]\ [0x%02.2B]%<\ %F\ (%v,%l)\ %3p%%\ of\ %L\ lines
 
 " <leader><leader> toggles between buffers
 nnoremap <leader><leader> <c-^>
-
-" Move by line
-nnoremap j gj
-nnoremap k gk
-
-" <leader>, shows/hides hidden characters
-nnoremap <leader>, :set invlist<cr>
-
-" <leader>g for Rg search
-noremap <leader>g :Rg<CR>
-
-noremap <leader>f :GFiles<CR>
-
-" Open hotkeys
-map <C-p> :Files<CR>
-nmap <leader>; :Buffers<CR>
-
-" Quick-save
-nmap <leader>w :wa<CR>
-
-" <leader>, shows/hides hidden characters
-nnoremap <leader>, :set invlist<cr>
 
 " moving among tabs
 nnoremap <C-Left> :tabprevious<CR>
@@ -195,7 +173,7 @@ inoremap <F5> <ESC>:buffers<CR>:buffer<Space>
 nnoremap <F6> :e.<CR>
 inoremap <F6> <ESC>:e.<CR>
 
-map <F8> :NERDTreeToggle<CR>
+map <F8> :NvimTreeToggle<CR>
 
 map <F9> :GFiles<CR>
 nnoremap <S-F9> :source Session.vim<CR>:tabnext 1<CR>:NERDTree<CR>
@@ -216,10 +194,12 @@ inoremap <S-F11> <ESC>:q<CR>1gt
 "inoremap <silent> <F12> <ESC>:wa<CR>:! make && time ./a.out<CR>
 "nnoremap <silent> <F12> :wa<CR>:! cargo build --release && time ./target/release/rust<CR>
 "inoremap <silent> <F12> <ESC>:wa<CR>:! cargo build --release && time ./target/release/rust<CR>
-"nnoremap <silent> <F12> :wa<CR>:! cargo run<CR>
-"inoremap <silent> <F12> <ESC>:wa<CR>:! cargo run<CR>
-nnoremap <silent> <F12> :wa<CR>:! cargo build --release && time ./target/release/rust<CR>
-inoremap <silent> <F12> <ESC>:wa<CR>:! cargo build --release && time ./target/release/rust<CR>
+nnoremap <silent> <F12> :wa<CR>:! go run main.go<CR>
+inoremap <silent> <F12> <ESC>:wa<CR>:! go run main.go<CR>
+nnoremap <silent> <S-F12> :wa<CR>:! cargo run --release<CR>
+inoremap <silent> <FS-12> <ESC>:wa<CR>:! cargo run --release<CR>
+"nnoremap <silent> <F12> :wa<CR>:! cargo build --release && time ./target/release/rust<CR>
+"inoremap <silent> <F12> <ESC>:wa<CR>:! cargo build --release && time ./target/release/rust<CR>
 "nnoremap <silent> <F12> :wa<CR>:! cargo build && time ./target/debug/rust<CR>
 "inoremap <silent> <F12> <ESC>:wa<CR>:! cargo build && time ./target/debug/rust<CR>
 
@@ -227,8 +207,10 @@ inoremap <silent> <F12> <ESC>:wa<CR>:! cargo build --release && time ./target/re
 "inoremap <C-a> <ESC>:wa<CR>:! cd build; make && time ./checkers<CR>
 "nnoremap <silent> <C-a> :wa<CR>:! cargo build --release && time ./target/release/rust<CR>
 "inoremap <silent> <C-a> <ESC>:wa<CR>:! cargo build --release && time ./target/release/rust<CR>
-nnoremap <C-a> :wa<CR>:! cargo build && time ./target/debug/rust<CR>
-inoremap <C-a> <ESC>:wa<CR>:! cargo build && time ./target/debug/rust<CR>
+"nnoremap <C-a> :wa<CR>:! cargo build && time ./target/debug/rust<CR>
+"inoremap <C-a> <ESC>:wa<CR>:! cargo build && time ./target/debug/rust<CR>
+nnoremap <silent> <C-a> :wa<CR>:! cargo run<CR>
+inoremap <silent> <C-a> <ESC>:wa<CR>:! cargo run<CR>
 "nnoremap <C-a> :wa<CR>:! time g++ -std=c++14 -O0 main.cc && time ./a.out<CR>
 "inoremap <C-a> <ESC>:wa<CR>:! time g++ -std=c++14 -O0 main.cc && time ./a.out<CR>
 "nnoremap <C-a> :wa<CR>:! time rustc -O main.rs -o main && time ./main<CR>
